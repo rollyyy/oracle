@@ -1,0 +1,263 @@
+-- JOIN 연습문제
+
+-- 1. 이름에 '형'자가 들어가는 직원들의
+-- 사번, 사원명, 직급명을 조회하세요.
+-- ANSI 표준
+SELECT
+        EMP_ID 사번
+      , EMP_NAME 사원명
+      , JOB_NAME 직급명
+  FROM EMPLOYEE  
+  JOIN JOB USING(JOB_CODE)
+  WHERE EMP_NAME LIKE '%형%';
+
+
+-- 오라클 전용
+SELECT
+        EMP_ID 사번
+      , EMP_NAME 사원명
+      , JOB_NAME 직급명
+  FROM EMPLOYEE A 
+      , JOB B
+  WHERE A.JOB_CODE = B.JOB_CODE
+    AND EMP_NAME LIKE '%형%';
+
+-- 2. 주민번호가 70년대 생이면서 성별이 여자이고, 
+--    성이 전씨인 직원들의 사원명, 주민번호, 부서명, 직급명을 조회하세요.
+-- ANSI 표준
+SELECT
+      A.EMP_NAME 사원명
+    , A.EMP_NO 주민번호
+    , B.DEPT_TITLE 부서명
+    , C.JOB_NAME 직급명
+  FROM EMPLOYEE A
+  JOIN DEPARTMENT B ON(A.DEPT_CODE = B.DEPT_ID)
+  JOIN JOB C USING(JOB_CODE)
+  WHERE SUBSTR(A.EMP_NO, 8, 1) = '2'
+    AND SUBSTR(A.EMP_NO, 1, 1) = '7';
+
+-- 오라클 전용
+SELECT
+      A.EMP_NAME 사원명
+    , A.EMP_NO 주민번호
+    , B.DEPT_TITLE 부서명
+    , C.JOB_NAME 직급명
+  FROM EMPLOYEE A
+     , DEPARTMENT B 
+     , JOB C 
+  WHERE A.JOB_CODE = C.JOB_CODE 
+    AND A.DEPT_CODE = B.DEPT_ID 
+    AND SUBSTR(A.EMP_NO, 8, 1) = '2'
+    AND SUBSTR(A.EMP_NO, 1, 1) = '7';
+
+-- 3. 가장 나이가 적은 직원의 사번, 사원명, 
+--    나이, 부서명, 직급명을 조회하세요.
+-- ANSI 표준
+SELECT 
+      A.EMP_ID 사번
+    , A.EMP_NAME 사원명
+    , EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM TO_DATE(SUBSTR(A.EMP_NO,1,6), 'RRMMDD')) + 1 나이
+    , B.DEPT_TITLE 부서명
+    , C.JOB_NAME 직급명 
+ FROM EMPLOYEE A
+ JOIN DEPARTMENT B ON(A.DEPT_CODE = B.DEPT_ID)
+ JOIN JOB C ON(A.JOB_CODE = C.JOB_CODE)
+ WHERE A.EMP_ID NOT IN('200', '201', '214');
+                                                    
+  
+
+-- ORACLE 전용
+SELECT 
+      A.EMP_ID 사번
+    , A.EMP_NAME 사원명
+    , EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM TO_DATE(SUBSTR(A.EMP_NO,1,6), 'RRMMDD')) + 1 나이
+    , B.DEPT_TITLE 부서명
+    , C.JOB_NAME 직급명 
+ FROM EMPLOYEE A
+    , DEPARTMENT B
+    , JOB C
+ WHERE A.JOB_CODE = C.JOB_CODE
+   AND A.DEPT_CODE = B.DEPT_ID
+   AND A.EMP_ID NOT IN('200', '201', '214');
+
+-- 4. 부서코드가 D2인 직원들의 사원명, 
+--    직급명, 부서명, 근무지역명을 조회하세요.
+-- ANSI 표준
+SELECT 
+      A.EMP_NAME 사원명
+    , B.JOB_NAME 직급명
+    , C.DEPT_TITLE 부서명
+    , D.LOCAL_NAME 근무지역명
+  FROM EMPLOYEE A
+  JOIN JOB B ON(A.JOB_CODE = B.JOB_CODE)
+  JOIN DEPARTMENT C ON(A.DEPT_CODE = C.DEPT_ID)
+  JOIN LOCATION D ON(C.LOCATION_ID = D.LOCAL_CODE)
+  WHERE DEPT_CODE = 'D2';
+                                                        
+  -- 오라클 전용
+  SELECT 
+      A.EMP_NAME 사원명
+    , B.JOB_NAME 직급명
+    , C.DEPT_TITLE 부서명
+    , D.LOCAL_NAME 근무지역명
+  FROM EMPLOYEE A
+     , JOB B
+     , DEPARTMENT C
+     , LOCATION D
+  WHERE A.JOB_CODE = B.JOB_CODE 
+    AND A.DEPT_CODE = C.DEPT_ID   
+    AND C.LOCATION_ID = D.LOCAL_CODE
+    AND DEPT_CODE = 'D2';
+
+-- 5. 보너스포인트가 없는 직원들 중에서 직급코드가 
+--     J4와 J7인 직원들의 사원명, 직급명, 급여를 조회하세요.
+-- ANSI 표준
+SELECT
+      A.EMP_NAME 사원명
+    , B.JOB_NAME 직급명
+    , A.SALARY 급여
+  FROM EMPLOYEE A
+  JOIN JOB B ON(A.JOB_CODE = B.JOB_CODE)
+ WHERE A.BONUS IS NULL
+   AND A.JOB_CODE IN('J4', 'J7');
+-- 오라클 전용
+SELECT
+      A.EMP_NAME 사원명
+    , B.JOB_NAME 직급명
+    , A.SALARY 급여
+  FROM EMPLOYEE A
+     , JOB B
+ WHERE 
+       A.JOB_CODE = B.JOB_CODE
+   AND A.BONUS IS NULL
+   AND A.JOB_CODE IN('J4', 'J7');
+   
+-- 6. 보너스포인트를 받는 직원들의 사원명, 
+--    보너스포인트, 부서명, 근무지역명을 조회하세요.
+-- ANSI 표준
+SELECT
+       A.EMP_NAME 사원명
+     , A.BONUS 보너스포인트
+     , B.DEPT_TITLE 부서명
+     , C.LOCAL_NAME 근무지역명
+  FROM EMPLOYEE A
+  JOIN DEPARTMENT B ON (A.DEPT_CODE = B.DEPT_ID)
+  JOIN LOCATION C ON (B.LOCATION_ID = C.LOCAL_CODE)
+  WHERE A.BONUS IS NOT NULL;
+-- 오라클 전용
+SELECT
+       A.EMP_NAME 사원명
+     , A.BONUS 보너스포인트
+     , B.DEPT_TITLE 부서명
+     , C.LOCAL_NAME 근무지역명
+  FROM EMPLOYEE A
+     , DEPARTMENT B
+     , LOCATION C
+  WHERE A.DEPT_CODE = B.DEPT_ID
+    AND B.LOCATION_ID = C.LOCAL_CODE
+    AND A.BONUS IS NOT NULL;
+  
+-- 7. 해외영업팀에 근무하는 사원명, 
+--    직급명, 부서코드, 부서명을 조회하세요.
+-- ANSI 표준
+SELECT
+      A.EMP_NAME 사원명
+    , B.JOB_NAME 직급명
+    , C.DEPT_ID 부서코드
+    , C.DEPT_TITLE 부서명
+  FROM EMPLOYEE A
+  JOIN JOB B ON (A.JOB_CODE = B.JOB_CODE)
+  JOIN DEPARTMENT C ON (A.DEPT_CODE = C.DEPT_ID)
+  JOIN DEPARTMENT C ON (A.DEPT_CODE = C.DEPT_ID)
+ WHERE C.DEPT_TITLE LIKE '%해외영업%';
+
+-- 오라클 전용
+SELECT
+      A.EMP_NAME 사원명
+    , B.JOB_NAME 직급명
+    , C.DEPT_ID 부서코드
+    , C.DEPT_TITLE 부서명
+  FROM EMPLOYEE A
+     , JOB B
+     , DEPARTMENT C
+ WHERE A.JOB_CODE = B.JOB_CODE
+   AND A.DEPT_CODE = C.DEPT_ID
+   AND A.DEPT_CODE = C.DEPT_ID
+   AND C.DEPT_TITLE LIKE '%해외영업%';
+
+-- 8. 본인 급여 등급의 최소급여(MIN_SAL)를 초과하여 급여를 받는 직원들의
+--    사원명, 직급명, 급여, 보너스포함 연봉을 조회하세요.
+--    연봉에 보너스포인트를 적용한다.
+-- ANSI 표준
+SELECT
+       A.EMP_NAME 사원명
+     , B.JOB_NAME 직급명
+     , A.SALARY 급여
+     , A.SALARY + (A.SALARY * (NVL(A.BONUS, 0) + 1)) 보너스포함연봉
+  FROM EMPLOYEE A
+  JOIN JOB B ON (A.JOB_CODE = B.JOB_CODE)
+  JOIN SAL_GRADE C ON (A.SAL_LEVEL = C.SAL_LEVEL)
+  WHERE SALARY > MIN_SAL;
+  
+-- 오라클 전용
+SELECT
+       A.EMP_NAME 사원명
+     , B.JOB_NAME 직급명
+     , A.SALARY 급여
+     , A.SALARY + (A.SALARY * (NVL(A.BONUS, 0) + 1)) 보너스포함연봉
+  FROM EMPLOYEE A
+     , JOB B
+     , SAL_GRADE C
+  WHERE A.JOB_CODE = B.JOB_CODE
+    AND A.SAL_LEVEL = C.SAL_LEVEL
+    AND SALARY > MIN_SAL;
+  
+-- 9. 한국과 일본에 근무하는 직원들의 
+--    사원명, 부서명, 지역명, 국가명을 조회하세요.
+-- ANSI 표준
+SELECT
+       A.EMP_NAME 사원명
+     , B.DEPT_TITLE 부서명
+     , C.LOCAL_NAME 지역명
+     , D.NATIONAL_NAME 국가명
+  FROM EMPLOYEE A
+  JOIN DEPARTMENT B ON (A.DEPT_CODE = DEPT_ID)
+  JOIN LOCATION C ON (B.LOCATION_ID = C.LOCAL_CODE)
+  JOIN NATIONAL D ON (C.NATIONAL_CODE = D.NATIONAL_CODE)
+  WHERE NATIONAL_NAME IN ('한국', '일본');
+-- 오라클 전용
+SELECT
+       A.EMP_NAME 사원명
+     , B.DEPT_TITLE 부서명
+     , C.LOCAL_NAME 지역명
+     , D.NATIONAL_NAME 국가명
+  FROM EMPLOYEE A
+     , DEPARTMENT B
+     , LOCATION C
+     , NATIONAL D
+  WHERE A.DEPT_CODE = DEPT_ID
+    AND B.LOCATION_ID = C.LOCAL_CODE
+    AND C.NATIONAL_CODE = D.NATIONAL_CODE
+    AND NATIONAL_NAME IN ('한국', '일본');
+
+-- 10. 같은 부서에 근무하는 직원들의 사원명, 부서코드, 
+--     동료이름을 조회하세요. self join 사용 (60행)
+-- ANSI 표준
+SELECT
+      A.EMP_NAME 사원명
+    , A.DEPT_CODE 부서코드 
+    , B.EMP_NAME 동료이름
+  FROM EMPLOYEE A
+  JOIN EMPLOYEE B ON (A.DEPT_CODE = B.DEPT_CODE)
+ WHERE A.EMP_NAME != B.EMP_NAME; 
+  
+  
+-- 오라클 전용
+SELECT
+      A.EMP_NAME 사원명
+    , A.DEPT_CODE 부서코드 
+    , B.EMP_NAME 동료이름
+  FROM EMPLOYEE A
+     , EMPLOYEE B
+ WHERE A.DEPT_CODE = B.DEPT_CODE
+   AND A.EMP_NAME != B.EMP_NAME; 
