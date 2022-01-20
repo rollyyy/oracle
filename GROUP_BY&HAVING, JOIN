@@ -34,7 +34,8 @@ SELECT
   JOIN DEPARTMENT B ON(A.DEPT_CODE = B.DEPT_ID)
   JOIN JOB C USING(JOB_CODE)
   WHERE SUBSTR(A.EMP_NO, 8, 1) = '2'
-    AND SUBSTR(A.EMP_NO, 1, 1) = '7';
+    AND SUBSTR(A.EMP_NO, 1, 1) = '7'
+    AND A.EMP_NAME LIKE '전%';
 
 -- 오라클 전용
 SELECT
@@ -48,37 +49,42 @@ SELECT
   WHERE A.JOB_CODE = C.JOB_CODE 
     AND A.DEPT_CODE = B.DEPT_ID 
     AND SUBSTR(A.EMP_NO, 8, 1) = '2'
-    AND SUBSTR(A.EMP_NO, 1, 1) = '7';
+    AND SUBSTR(A.EMP_NO, 1, 1) = '7'
+    AND A.EMP_NAME LIKE '전%';
+
 
 -- 3. 가장 나이가 적은 직원의 사번, 사원명, 
 --    나이, 부서명, 직급명을 조회하세요.
 -- ANSI 표준
 SELECT 
-      A.EMP_ID 사번
-    , A.EMP_NAME 사원명
-    , EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM TO_DATE(SUBSTR(A.EMP_NO,1,6), 'RRMMDD')) + 1 나이
-    , B.DEPT_TITLE 부서명
-    , C.JOB_NAME 직급명 
- FROM EMPLOYEE A
- JOIN DEPARTMENT B ON(A.DEPT_CODE = B.DEPT_ID)
- JOIN JOB C ON(A.JOB_CODE = C.JOB_CODE)
- WHERE A.EMP_ID NOT IN('200', '201', '214');
-                                                    
-  
+       E.EMP_ID
+     , E.EMP_NAME
+     , EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM(TO_DATE(SUBSTR(E.EMP_NO,1,2), 'RR'))) + 1 AS 나이
+     , D.DEPT_TITLE
+     , J.JOB_NAME
+  FROM EMPLOYEE E
+  JOIN DEPARTMENT D ON(E.DEPT_CODE = D.DEPT_ID)
+  JOIN JOB J ON(E.JOB_CODE = J.JOB_CODE)
+ WHERE EXTRACT(YEAR FROM SYSDATE)- EXTRACT(YEAR FROM(TO_DATE(SUBSTR(E.EMP_NO,1,2), 'RR'))) + 1 = (SELECT MIN(EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM(TO_DATE(SUBSTR(EMP_NO,1,2), 'RR'))) + 1) 
+                                                                                                    FROM EMPLOYEE
+                                                                                                 );
 
 -- ORACLE 전용
 SELECT 
-      A.EMP_ID 사번
-    , A.EMP_NAME 사원명
-    , EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM TO_DATE(SUBSTR(A.EMP_NO,1,6), 'RRMMDD')) + 1 나이
-    , B.DEPT_TITLE 부서명
-    , C.JOB_NAME 직급명 
- FROM EMPLOYEE A
-    , DEPARTMENT B
-    , JOB C
- WHERE A.JOB_CODE = C.JOB_CODE
-   AND A.DEPT_CODE = B.DEPT_ID
-   AND A.EMP_ID NOT IN('200', '201', '214');
+       E.EMP_ID
+     , E.EMP_NAME
+     , EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM(TO_DATE(SUBSTR(E.EMP_NO,1,2), 'RR'))) + 1 AS 나이
+     , D.DEPT_TITLE
+     , J.JOB_NAME
+  FROM EMPLOYEE E
+     , DEPARTMENT D
+     , JOB J
+ WHERE E.DEPT_CODE = D.DEPT_ID
+   AND E.JOB_CODE = J.JOB_CODE
+   AND EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM(TO_DATE(SUBSTR(EMP_NO,1,2), 'RR'))) + 1 = (SELECT MIN(EXTRACT(YEAR FROM SYSDATE) - EXTRACT(YEAR FROM(TO_DATE(SUBSTR(EMP_NO,1,2), 'RR'))) + 1) 
+                                                                                                   FROM EMPLOYEE
+                                                                                                );
+
 
 -- 4. 부서코드가 D2인 직원들의 사원명, 
 --    직급명, 부서명, 근무지역명을 조회하세요.
@@ -168,7 +174,6 @@ SELECT
   FROM EMPLOYEE A
   JOIN JOB B ON (A.JOB_CODE = B.JOB_CODE)
   JOIN DEPARTMENT C ON (A.DEPT_CODE = C.DEPT_ID)
-  JOIN DEPARTMENT C ON (A.DEPT_CODE = C.DEPT_ID)
  WHERE C.DEPT_TITLE LIKE '%해외영업%';
 
 -- 오라클 전용
@@ -181,7 +186,6 @@ SELECT
      , JOB B
      , DEPARTMENT C
  WHERE A.JOB_CODE = B.JOB_CODE
-   AND A.DEPT_CODE = C.DEPT_ID
    AND A.DEPT_CODE = C.DEPT_ID
    AND C.DEPT_TITLE LIKE '%해외영업%';
 
