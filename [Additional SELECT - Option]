@@ -1,0 +1,48 @@
+/*9. 8 번의 결과 중 ‘인문사회’ 계열에 속한 과목의 교수 이름을 찾으려고 한다. 이에
+해당하는 과목 이름과 교수 이름을 출력하는 SQL 문을 작성하시오.*/
+
+SELECT
+      DEPARTMENT_NO 
+ FROM TB_DEPARTMENT
+ WHERE CATEGORY = '인문사회';
+ 
+ SELECT
+       A.CLASS_NAME
+     , B.PROFESSOR_NAME
+  FROM TB_CLASS A
+  JOIN TB_PROFESSOR B ON (A.DEPARTMENT_NO  = B.DEPARTMENT_NO)
+  WHERE  B.PROFESSOR_NAME  IN (SELECT
+                                   D.PROFESSOR_NAME
+                              FROM TB_DEPARTMENT C
+                              JOIN TB_PROFESSOR D ON (C.DEPARTMENT_NO = D.DEPARTMENT_NO)
+                             WHERE C.CATEGORY = '인문사회'
+                             )
+ GROUP BY A.CLASS_NAME , B.PROFESSOR_NAME
+ ORDER BY B.PROFESSOR_NAME;
+ 
+ /*10. ‘음악학과’ 학생들의 평점을 구하려고 한다. 음악학과 학생들의 "학번", "학생 이름", 
+"전체 평점"을 출력하는 SQL 문장을 작성하시오. (단, 평점은 소수점 1 자리까지만 반올림하여 표시한다.)*/
+
+SELECT
+      A.STUDENT_NO
+    , A.STUDENT_NAME
+    , C.POINT
+  FROM TB_STUDENT A 
+  JOIN TB_DEPARTMENT B ON (A.DEPARTMENT_NO = B.DEPARTMENT_NO)
+  JOIN TB_GRADE C ON(A.STUDENT_NO = C.STUDENT_NO)
+  WHERE B.DEPARTMENT_NAME = '음악학과';
+  
+SELECT
+      STUDENT_NO    
+    , STUDENT_NAME
+    , ROUND(AVG(POINT),1)
+  FROM (SELECT
+      A.STUDENT_NO
+    , A.STUDENT_NAME
+    , C.POINT
+  FROM TB_STUDENT A 
+  JOIN TB_DEPARTMENT B ON (A.DEPARTMENT_NO = B.DEPARTMENT_NO)
+  JOIN TB_GRADE C ON(A.STUDENT_NO = C.STUDENT_NO)
+  WHERE B.DEPARTMENT_NAME = '음악학과') 
+  GROUP BY STUDENT_NO , STUDENT_NAME 
+  ORDER BY STUDENT_NO;
