@@ -207,17 +207,17 @@ SELECT
  GROUP BY DEPARTMENT_NO
  ORDER BY 1;
       
-/*? 14. 춘 대학교에 다니는 동명이인(同名異人) 학생들의 이름을 찾고자 핚다. 어떤 SQL
-문장을 사용하면 가능하겠는가?*/ 
-
-SELECT
-      STUDENT_NAME 동명이름
-    , CASE
-      WHEN COUNT(*) >= 2 THEN COUNT(*)
-      END "동명인 수"
+/*14번
+춘 대학교에 다니는 동명이인 학생들의 이름을 찾고자 한다.
+어떤 SQL 문장을 사용하면 가능하겠는가?*/
+SELECT 
+       STUDENT_NAME AS 동일이름
+     , COUNT(*) AS "동명인 수"
   FROM TB_STUDENT
  GROUP BY STUDENT_NAME
- ORDER BY 2;
+ HAVING COUNT(*) > 1
+ ORDER BY 1;
+
  
  /*15. 학번이 A112113 인 김고운 학생의 년도, 학기 별 평점과 년도 별 누적 평점 , 총
 평점을 구하는 SQL 문을 작성하시오. (단, 평점은 소수점 1 자리까지만 반올림하여 표시한다.)*/
