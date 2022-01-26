@@ -1,0 +1,98 @@
+/*춘대학교에서 2002년 기숙사 추가 모집을 시행했다. 
+서브쿼리를 이용한 테이블 생성을 통하여 기숙사 테이블을 생성하시오.
+성적은 2001년 2학기 성적을 가져온다. 
+성별은 학생 주민등록번호의 뒷자리가 1로 시작 할 경우 '남' 
+2로 시작 할 경우 '여'로 지정한다. 
+단, 출력헤더는 "학번", "학생이름", "주소", "성적", "성별"으로 출력되도록 한다. */
+
+-----------------------
+테이블이름
+   TB_기숙사
+
+컬럼
+   학번(STUDENT_NO)
+   학생이름(STUDENT_NAME)
+   주소(STUDENT_ADDRESS)
+   성적(POINT)
+   성별(STUDENT_SSN)
+-----------------------
+
+
+CREATE TABLE TB_기숙사
+AS
+  SELECT
+        A.STUDENT_NO 학번
+      , A.STUDENT_NAME 학생이름
+      , A.STUDENT_ADDRESS 주소
+      , B.POINT 성적
+      ,CASE
+       WHEN SUBSTR(A.STUDENT_SSN, 8,1) = '1' THEN '남'
+       WHEN SUBSTR(A.STUDENT_SSN, 8,1) = '2' THEN '여'
+       END 성별
+    FROM TB_STUDENT A 
+    JOIN TB_GRADE B ON(A.STUDENT_NO = B.STUDENT_NO)
+   WHERE B.TERM_NO = '200102';
+
+
+
+/*위에서 만든 테이블에 컬럼을 추가하려고 한다.*/
+--------------------------------------------------------------
+--기숙사지원_YN 컬럼은 아무값도 지정되지 않았을 때 'Y'가 나오게 한다.
+--(안에 들어갈 값은 'Y' OR 'N' 이다) 
+
+--합불합_YN 컬럼은 아무값도 지정되지 않았을 때 'N'가 나오게 한다.
+--(안에 들어갈 값은 'Y' OR 'N' 이다)
+
+--학번을 기본키로 설정한다.
+--------------------------------------------------------------
+
+
+ALTER TABLE TB_기숙사 
+ADD (기숙사지원_YN CHAR(1) DEFAULT 'Y' );
+   
+ALTER TABLE TB_기숙사 
+ADD (합불합_YN CHAR(1) DEFAULT 'N');  
+
+ALTER TABLE TB_기숙사 
+ADD PRIMARY KEY(학번);
+
+
+
+/*모든 학생의 전체 평균보다 성적이 높거나 같고, 서울과 경기도를 제외한 지역에서 거주하고,
+입학년도가 98년 이후(포함)이며 현재 휴학중이 아닌 사람중에 기숙사 추가 모집을 받으려한다.
+UPDATE 문을 이용해 해당 조건에 해당하는 학생들의 합불합_YN 컬럼 값을 'Y'로  변경하시오.*/
+
+UPDATE TB_기숙사
+   SET 합불합_YN = 'Y'
+ WHERE 학번 IN (SELECT
+                     A.학번
+                 FROM TB_기숙사 A
+                 JOIN TB_STUDENT C ON(A.학번 = C.STUDENT_NO )
+                WHERE A.성적 >= (SELECT
+                                    AVG(성적)
+                               FROM TB_기숙사)
+                  AND A.주소 NOT LIKE '%서울%'
+                  AND A.주소 NOT LIKE '경기도%'
+                  AND SUBSTR(C.ENTRANCE_DATE,1,2) >= '98'
+                  AND C.ABSENCE_YN = 'N');  
+      
+
+
+--내가 확인하려고 만든 것
+SELECT
+      A.학번
+    , A.학생이름
+    , A.주소
+    , A.성적
+    , A.성별
+    , A.기숙사지원_YN
+    , A.합불합_YN
+  FROM TB_기숙사 A
+  JOIN TB_STUDENT C ON(A.학번 = C.STUDENT_NO )
+  WHERE A.성적 >= (SELECT
+                        AVG(성적)
+                   FROM TB_기숙사)
+    AND A.주소 NOT LIKE '%서울%'
+    AND A.주소 NOT LIKE '경기도%'
+    AND SUBSTR(C.ENTRANCE_DATE,1,2) >= '98'
+    AND C.ABSENCE_YN = 'N';
