@@ -1,0 +1,58 @@
+1. EMP 테이블에서 Blake와 같은 부서에 있는 모든 사원의 이름과 입사일자를 출력하는 SELECT문을 작성하시오.
+
+select a.ename, a.hiredate
+from emp a join dept b
+   on a.deptno = b.deptno
+  where a.deptno = (select deptno
+                    from emp
+                   where ename = 'BLAKE');
+
+
+2. EMP 테이블에서 평균 급여 이상을 받는 모든 종업원에 대해서 종업원 번호와 이름을 출력하는 SELECT문을 작성하시오. 단 급여가 많은 순으로 출력하여라.
+
+select empno, ename, sal
+ from emp
+where sal > (select avg(sal)
+             from emp)
+ order by sal desc;
+
+
+3. EMP 테이블에서 이름에 “T”가 있는 사원이 근무하는 부서에서 근무하는 모든 종업원에 대해 사원 번호,이름,급여를 출력하는 SELECT문을 작성하시오. 단 사원번호 순으로 출력하여라.
+
+select empno, ename, sal
+from emp
+where deptno IN (select deptno
+                 from emp
+                where ename like '%T%'
+                 group by deptno)
+
+
+
+4. EMP 테이블에서 부서 위치가 Dallas인 모든 종업원에 대해 이름,업무,급여를 출력하는 SELECT문을 작성하시오.
+
+select ename, job, sal
+from emp
+where deptno = (select deptno
+                 from dept
+                where loc = 'DALLAS')
+order by sal;
+
+5. EMP 테이블에서 King에게 보고하는 모든 사원의 이름과 급여를 출력하는 SELECT문을 작성하시오.
+
+select ename, sal
+from emp
+where mgr = (select empno
+              from emp
+             where ename = 'KING')
+order by sal;
+
+
+6. EMP 테이블에서 SALES부서 사원의 이름,업무를 출력하는 SELECT문을 작성하시오.
+
+select ename, job
+from emp
+where deptno = (select deptno
+from dept
+where dname = 'SALES')
+order by job;
+
