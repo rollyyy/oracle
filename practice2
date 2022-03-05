@@ -1,0 +1,53 @@
+7. EMP 테이블에서 월급이 부서 30의 최저 월급보다 높은 사원을 출력하는 SELECT문을 작성하시오.
+
+select empno 사번, ename 이름 , sal 급여
+from emp
+where sal > (select MIN(sal)
+                    from emp
+                   where deptno = 30);
+
+
+8. EMP 테이블에서 부서 10에서 부서 30의 사원과 같은 업무를 맡고 있는 사원의 이름과 업무를 출력하는 SELECT문을 작성하시오.
+
+select *
+from emp
+where deptno = 30
+and job IN (select job from emp where deptno = 10);
+
+
+9. EMP 테이블에서 FORD와 업무도 월급도 같은 사원의 모든 정보를 출력하는 SELECT문을 작성하시오.
+
+select *
+from emp
+where (job, sal) IN (    
+                    select job, sal
+                      from emp
+                     where ename = 'FORD')
+   and ename <> 'FORD';
+
+
+
+
+
+
+
+10. EMP 테이블에서 업무가 JONS와 같거나 월급이 FORD이상인 사원의 정보를 이름,업무,부서번호,급여를 출력하는 SELECT문을 작성하시오. 단 업무별, 월급이 많은 순으로 출력하여라.
+
+SELECT ename, job, deptno, sal
+  FROM emp
+ WHERE job = (
+                SELECT job
+                  FROM emp
+                 WHERE ename = 'JONES')
+       OR sal > (
+                 SELECT sal
+                  FROM emp
+                  WHERE ename = 'FORD');
+
+11. EMP 테이블에서 SCOTT 또는 WARD와 월급이 같은 사원의 정보를 이름,업무,급여를 출력하는 SELECT문을 작성하시오.
+
+SELECT ename, job, sal
+  FROM emp
+ WHERE sal IN (SELECT sal
+                 FROM emp
+                WHERE ename = 'SCOTT' OR ename = 'WARD');
