@@ -1,0 +1,54 @@
+12. EMP 테이블에서 CHICAGO에서 근무하는 사원과 같은 업무를 하는 사원의 이름,업무를 출력하는 SELECT문을 작성하시오.
+
+SELECT ename, job
+  FROM emp
+ WHERE job = (SELECT dname
+                FROM dept
+               WHERE loc = 'CHICAGO');
+
+
+13. EMP 테이블에서 부서별로 월급이 평균 월급보다 높은 사원을 부서번호,이름,급여를 출력하는 SELECT문을 작성하시오.
+
+SELECT e.deptno, e.ename, e.sal
+  FROM emp e,
+                   (  SELECT deptno, TRUNC (AVG (sal), 0) AS sal
+                        FROM emp
+                    GROUP BY deptno
+                    ORDER BY deptno) f
+ WHERE e.deptno = f.deptno
+     AND e.sal > f.sal
+ORDER BY SAL;
+
+
+
+14. EMP 테이블에서 업무별로 월급이 평균 월급보다 낮은 사원을 부서번호,이름,급여를 출력하는 SELECT문을 작성하시오.
+
+SELECT e.deptno, e.ename, e.sal
+  FROM emp e,
+                   (  SELECT deptno, TRUNC (AVG (sal), 0) AS sal
+                        FROM emp
+                    GROUP BY deptno
+                    ORDER BY deptno) f
+ WHERE e.deptno = f.deptno
+     AND e.sal < f.sal
+ORDER BY SAL;
+
+
+
+
+
+15. EMP 테이블에서 적어도 한명 이상으로부터 보고를 받을 수 있는 사원을 업무,이름,사원번호,부서번호를 출력하는 SELECT문을 작성하시오.
+
+SELECT job, ename, empno, deptno
+  FROM emp
+ WHERE empno IN (SELECT mgr
+                    FROM emp)
+ORDER BY JOB;
+
+
+16. EMP 테이블에서 말단 사원의 사원번호,이름,업무,부서번호를 출력하는 SELECT문을 작성하시오.
+
+SELECT empno, ename, job, deptno
+    FROM emp
+   WHERE job = 'CLERK'
+ORDER BY empno;
