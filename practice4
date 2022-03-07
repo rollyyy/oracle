@@ -1,0 +1,66 @@
+1. 20번 부서나 30번 부서에 속하고 이름에 ‘AR’이 포함된 사원들의 이름과 부서번호, 업무(job)를 구하시오.
+[where절, OR 또는 IN, LIKE 연산자 이용]
+
+SELECT ENAME, DEPTNO, JOB
+FROM EMP
+WHERE (ename LIKE '%AR%' )
+AND (DEPTNO IN (20, 30));
+
+2. RESEARCH 부서에서 일하는 사원들 중 급여가 2,000이하인 사원들의 수를 구하기 위해, (a) join 을 이용하는 질의와, (b) subquery를 이용하는 질의를 각각 작성하시오.
+
+Answer A
+
+SELECT COUNT(DISTINCT empno)
+FROM emp e JOIN dept d
+    ON e.deptno = d.deptno
+WHERE dname = 'RESEARCH'
+AND sal <= 2000;
+ 
+
+Answer B
+
+SELECT COUNT(*)
+FROM emp
+WHERE deptno IN
+    (SELECT deptno
+     FROM dept
+     WHERE dname = 'RESEARCH')
+AND sal <= 2000;
+ 
+
+3. 사원들 중 급여등급이 5에 속하면서 수당(comm)이 500미만인 사원들의 이름과 급여, 수당을 구하고 “연봉”을 계산하시오. 단, 수당을 모를 경우 0으로 간주함 [non-equi-join, NVL 이용]
+
+SELECT ENAME, SAL, NVL(COMM, 0), sal*12 + NVL(COMM, 0) "연봉"
+FROM emp e, salgrade s
+WHERE s.grade = 5
+AND (e.sal >= s.losal AND e.sal <= s.hisal) AND (e.comm < 500 OR e.comm IS NULL);
+ 
+ 
+
+4. 모든 사원들의 이름, 입사일, 재직년수(만으로 계산), “퇴사예정일”(재직한지 30년 되는 날)을 구하시오. 
+입사일은 “OOOO년 OO월 OO일” 형식으로 출력하고, 입사일이 빠른 사원부터 순서대로 출력
+[SYSDATE, date 타입 연산/함수, 타입변환 함수, 버림 함수 이용]
+
+SELECT ENAME, TO_CHAR(HIREDATE, 'YYYY "년" MM "월" DD "일"')"입사일", 
+       ROUND(ROUND(MONTHS_BETWEEN(SYSDATE, HIREDATE), 2)/12, 0) "재직년수", 
+       ADD_MONTHS(HIREDATE, 360) "퇴사예정일"
+FROM emp, DUAL
+ORDER BY HIREDATE ASC;
+ 
+ 
+
+5. 각 부서에서 같은 업무를 수행하는 사원들을 분류하여 부서번호, 업무명, 인원수, 평균 급여를 출력하시오. [group by절, 집계 함수 이용]
+
+SELECT deptno, JOB, COUNT(empno), AVG(sal)
+FROM EMP
+GROUP BY deptno, job;
+ 
+
+6. 사원이 2명 이상 있는 부서들에 대해 부서명과 평균 급여를 각각 구하시오. [having절 이용] 
+(선택) 위 질의를 having절을 사용하지 않고 derived relation(subquery)을 사용하여 작성하시오.
+
+SELECT d.dname, AVG(sal)
+FROM emp e, dept d
+WHERE e.deptno = d.deptno
+GROUP BY d.dname
+HAVING COUNT(empno) >= 2
