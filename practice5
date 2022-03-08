@@ -1,0 +1,37 @@
+1. 이름이 ALLEN인 사원과 같은 업무를 하는 사람의 사원번호, 이름, 업무, 급여 추출
+select empno, ename, job, sal from emp
+where job=(select job from emp where ename='ALLEN');
+
+
+2. EMP 테이블의 사원번호가 7521인 사원과 업무가 같고 급여가 7934인 사원보다 많은 사원의 사원번호, 이름, 담당업무, 입사일, 급여 추출
+select empno, ename, job, hiredate, sal from emp
+where job=(select job from emp where empno=7521)
+   and sal>(select sal from emp where empno=7934);
+
+3. EMP 테이블에서 급여의 평균보다 적은 사원의 사원번호, 이름, 업무, 급여, 부서번호 추출
+select empno, ename, job, sal, deptno from emp
+where sal<(select avg(sal) from emp);
+
+4. 부서별 최소급여가 20번 부서의 최소급여보다 작은 부서의 부서번호, 최소 급여 추출
+select deptno, min(sal) from emp
+group by deptno
+having min(sal)>(select min(sal) from emp where deptno=20);
+
+
+5. 업무별 급여 평균 중 가장 작은 급여평균의 업무와 급여평균 추출
+select job, avg(sal) from emp
+group by job
+having avg(sal)=(select min(avg(sal)) from emp
+                     group by job);
+
+
+6. 업무별 최대 급여를 받는 사원의 사원번호, 이름, 업무, 입사일, 급여, 부서번호 추출
+select empno, ename, job, hiredate, sal, deptno from emp
+where (job, sal) in (select job, max(sal) from emp
+group by job);
+
+7. 30번 부서의 최소급여를 받는 사원보다 많은 급여를 받는 사원의 사원번호, 이름, 업무, 입사일, 급여, 부서번호, 단 30번 부서는 제외하고 추출
+select empno, ename, job, hiredate, sal, deptno from emp
+where sal>(select min(sal) from emp
+              where deptno=30)
+   and deptno != 30;
