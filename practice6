@@ -1,0 +1,51 @@
+8. 급여와 보너스가 30번 부서에 있는 사원의 급여와 보너스가 같은 사원을 30번 부서의 사원은 제외하고 추출
+
+select empno, ename, job, hiredate, sal, deptno from emp
+where (sal, nvl(comm, 0)) in (select sal, nvl(comm, 0) from emp
+                                 where deptno=30)
+   and deptno!=30;
+
+
+9. BLAKE와 같은 부서에 있는 모든 사원의 이름과 입사일자를 추출
+
+select ename, hiredate from emp
+where deptno=(select deptno from emp
+	        where ename='BLAKE');
+          
+
+10. 평균급여 이상을 받는 모든 사원에 대해 사원의 번호와 이름을 급여가 많은 순서로 추출
+
+select empno, ename from emp
+where sal>(select avg(sal) from emp)
+order by sal desc;
+
+
+11. 이름에 T가 있는 사원이 근무하는 부서에서 근무하는 모든 사원에 대해 사원번호,이름,급여를 출력, 사원번호 순서로 추출
+
+select deptno, empno, ename, sal from emp
+where deptno in (select deptno from emp where instr(ename, 'T', 1, 1)!=0)
+order by empno;
+
+12. 부서위치가 CHICAGO인 모든 사원에 대해 이름,업무,급여 추출
+
+select e.ename, e.job, e.sal from emp e, dept d
+where e.deptno=d.deptno
+   and d.loc='CHICAGO';
+
+13. KING에게 보고하는 모든 사원의 이름과 급여를 추출
+
+select ename, sal from emp
+where mgr=(select empno from emp 
+                where ename='KING');
+
+14. FORD와 업무와 월급이 같은 사원의 모든 정보 추출
+
+select * from emp
+where (job, sal) in (select job, sal from emp
+                        where ename='FORD');
+
+15. 업무가 JONES와 같거나 월급이 FORD 이상인 사원의 이름,업무,부서번호,급여 추출
+
+select ename, job, empno, sal from emp
+where job=(select job from emp where ename='JONES')
+     or sal>(select sal from emp where ename='FORD');
