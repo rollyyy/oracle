@@ -1,0 +1,44 @@
+16. SCOTT 또는 WARD와 월급이 같은 사원의 이름,업무,급여를 추출
+
+select ename, job, sal from emp
+where sal=(select sal from emp where ename='SCOTT')
+     or sal=(select sal from emp where ename='WARD');
+     
+
+17. SALES에서 근무하는 사원과 같은 업무를 하는 사원의 이름,업무,급여,부서번호 추출
+
+select ename, job, sal, deptno from emp
+where job in (select job from emp natural join dept
+                    where dname='SALES');
+
+18. 자신의 업무별 평균 월급보다 낮은 사원의 부서번호, 이름, 급여, 자신의 부서 평균급여를 추출
+
+select 
+	deptno, ename, sal,
+	(select avg(sal) from emp t
+	where t.deptno=e.deptno) deptavgsal
+from emp e
+where sal<(select avg(sal) from emp t
+	  where t.deptno=e.deptno);
+
+19. 사원번호,사원명,부서명,소속부서 인원수,업무,소속 업무 급여평균,급여를 추출
+
+select 
+	empno, ename, dname, 
+	(select count(*) from emp t
+	where t.deptno=e.deptno) "부서인원수",
+	job,
+	(select avg(sal)
+	from emp t
+	where t.job=e.job) "업무평균급여",
+	sal
+from emp e, dept d
+where e.deptno=d.deptno;
+
+20. 사원번호,사원명,부서번호,업무,급여, 자신의 소속 업무 평균급여를 추출
+
+select
+	empno, ename, deptno, job, sal,
+	(select avg(sal) from emp t
+	where t.job=e.job) "업무평균급여"
+from emp e;
