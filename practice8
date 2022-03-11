@@ -1,0 +1,27 @@
+21. 최소한 한 명의 부하직원이 있는 관리자의 사원번호,이름,입사일자,급여 추출
+
+select
+	empno, ename, hiredate, sal from emp e
+where exists(select 1 from emp t 
+	         where t.mgr=e.empno);
+
+22. 부하직원이 없는 사원의 사원번호, 이름, 업무, 부서번호 추출
+
+select
+	empno, ename, job, deptno from emp e
+where not exists(select 1 from emp t 
+	         where t.mgr=e.empno);
+
+23. BLAKE의 부하직원의 이름, 업무, 상사번호 추출
+
+select ename, job, mgr from emp
+where mgr=(select empno from emp
+	    where ename='BLAKE');
+
+24. BLAKE와 같은 상사를 가진 사원의 이름,업무, 상사번호 추출
+
+select ename, job, mgr from emp
+where mgr=(select mgr from emp
+	    where ename='BLAKE');
+
+ 
