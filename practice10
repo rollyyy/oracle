@@ -1,0 +1,38 @@
+7. 사원이름과 부서명과 월급을 출력하는데 월급이 3000 이상인 사원을 출력하라
+
+SELECT e.first_name, d.department_name, e.salary
+FROM employees e,  departments d
+WHERE e.department_id = d.department_id
+AND e.salary >= 3000;
+
+
+8. TJ 이란 사원보다 늦게 입사한 사원의 이름과 입사일을 출력하라 (cross join)
+
+SELECT b.first_name , b.hire_date
+FROM employees a,  employees b  -- a: TJ, b: 사원들
+WHERE a.first_name = 'TJ'
+AND a.hire_date < b.hire_date;
+
+
+9. 급여가 3000에서 5000사이인 사원의 이름과 소속부서명 출력하라
+
+SELECT e.first_name, d.department_name
+FROM employees e,  departments d
+WHERE e.department_id = d.department_id
+AND e.salary BETWEEN 3000 AND 5000;
+
+10. ACCOUNTING 부서 소속 사원의 이름과 입사일 출력하라
+
+SELECT e.first_name, d.department_name
+FROM employees e,  departments d
+WHERE e.department_id = d.department_id
+AND d.department_name = INITCAP('ACCOUNTING');
+
+
+11. 급여가 3000이하인 사원의 이름과 급여, 근무지를 출력하라
+
+SELECT e.first_name, e.salary, d.location_id, l.city
+FROM employees e,  departments d, locations l
+WHERE e.department_id = d.department_id
+AND d.location_id = l.location_id
+AND e.salary <= 3000 ;
