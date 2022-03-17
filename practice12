@@ -1,0 +1,54 @@
+11. 상품 중 판매가가 170,000원인 상품 조회
+
+SELECT PROD_NAME AS 상품명
+  FROM PROD
+ WHERE PROD_PRICE = 170000;
+
+12. 상품 중 판매가가 170,000원이 아닌 상품 조회
+
+SELECT PROD_NAME AS 상품명
+  FROM PROD
+ WHERE PROD_PRICE != 170000;
+
+13. 상품 중 판매가가 170,000원 초과 또는 미만인 상품 조회
+
+SELECT PROD_NAME AS 상품명
+  FROM PROD
+ WHERE 170000 < PROD_PRICE OR PROD_PRICE < 170000;
+
+14. 상품 중 판매가가 170,000원이상 또는 이하인 상품 조회
+
+SELECT PROD_NAME AS 상품명
+  FROM PROD
+ WHERE 170000 <= PROD_PRICE OR PROD_PRICE <= 170000;
+
+15. 상품 중 매입가가 200,000원 이하인 상품을 검색
+( Alias는 상품코드, 상품명, 매입가 )
+
+SELECT PROD_ID AS 상품코드,
+       PROD_NAME AS 상품명,
+       PROD_COST AS 매입가
+  FROM PROD
+ WHERE PROD_COST <= 200000;
+
+16. 회원 중 76년도 1월 1일 이후에 태어난 회원을 검색
+- 주민등록번호 앞자리로 비교
+( Alias는 회원ID, 회원 명, 주민등록번호 앞자리 )
+
+SELECT MEM_ID AS 회원ID,
+       MEM_NAME AS "회원 명",
+       MEM_REGNO1 AS "주민등록번호 앞자리"
+  FROM MEMBER
+ WHERE TO_NUMBER(MEM_REGNO1) > 760101;
+
+17. 상품 중 상품분류가 P201(여성 캐쥬얼)이고, 판매가가 170,000원인 상품 조회
+
+SELECT PROD_NAME AS 상품명
+  FROM PROD
+ WHERE PROD_LGU = 'P201' AND PROD_PRICE = 170000;
+
+18. 상품 중 상품분류가 P201(여성 캐쥬얼)이거나 판매가가 170,000원인 상품 조회
+
+SELECT PROD_NAME AS 상품명
+  FROM PROD
+ WHERE PROD_LGU = 'P201' OR PROD_PRICE = 170000;
