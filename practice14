@@ -1,0 +1,43 @@
+ 
+24. 상품 분류테이블(LPROD)에서 현재 상품테이블 (PROD) 에 존재하지 않는 분류만 검색  
+( Alias는 분류코드, 분류명 )
+
+SELECT DISTINCT(A.LPROD_GU) AS 분류코드,
+       A.LPROD_NM AS 분류명
+  FROM LPROD A, PROD B
+ WHERE  A.LPROD_GU NOT IN (SELECT PROD_LGU FROM PROD)
+ ORDER BY 1;
+
+25. 상품 중 판매가가 100,000원 부터 300,000원 사이의 상품 조회
+
+SELECT PROD_NAME AS 상품명
+  FROM PROD
+ WHERE PROD_PRICE BETWEEN 100000 AND 300000 ;
+
+26. 회원 중 생일이 1975-01-01에서 1976-12-31사이에 태어난 회원을 검색 
+( Alias는 회원ID, 회원 명, 생일 )
+
+SELECT MEM_ID AS 회원ID,
+       MEM_NAME AS "회원 명",
+       MEM_BIR AS 생일
+  FROM MEMBER
+ WHERE MEM_BIR BETWEEN TO_DATE('19750101') AND TO_DATE('19761231');
+
+27. 상품 중 매입가가 300,000~1,500,000이고 판매가가 800,000~2,000,000 인 상품을 검색
+( Alias는 상품명, 매입가, 판매가 )
+
+SELECT PROD_NAME AS 상품명,
+       PROD_COST AS 매입가,
+       PROD_PRICE AS 판매가
+  FROM PROD
+ WHERE PROD_COST BETWEEN TO_NUMBER(300000) AND TO_NUMBER(1500000)
+   AND PROD_PRICE BETWEEN TO_NUMBER(800000) AND TO_NUMBER(2000000);
+
+28. 회원 중 생일이 1975년도 생이 아닌 회원을 검색
+( Alias는 회원ID, 회원 명, 생일)
+
+SELECT MEM_ID AS 회원ID,
+       MEM_NAME AS "회원 명",
+       MEM_BIR AS 생일
+  FROM MEMBER
+ WHERE SUBSTR(MEM_BIR, 1, 4) != '1975';
