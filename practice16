@@ -1,0 +1,41 @@
+34. 상품테이블의 상품코드에서 왼쪽4자리, 오른쪽6자리를 검색 -----
+(Alias명은 상품코드, 대분류, 순번 )
+
+SELECT PROD_ID AS 상품코드,
+       SUBSTR(PROD_ID,1,4) AS 대분류,
+       SUBSTR(PROD_ID,-6,6) AS 순번
+  FROM PROD;
+    
+35. 거래처 테이블의 거래처명 중 '삼' --> '육' 으로 치환
+
+SELECT REPLACE(BUYER_NAME, '삼','육') AS 거래처명
+  FROM BUYER;
+
+36. 회원테이블의 회원성명 중 '이' --> '리' 로 치환 검색
+(Alias명은 회원명, 회원명치환 )
+
+SELECT MEM_NAME AS 회원명,
+       REPLACE(MEM_NAME, '이', '리') AS 회원명치환
+  FROM MEMBER;
+
+37. 회원 테이블의 마일리지를 12로 나눈 값을 검색
+(소수3째자리 반올림, 절삭)
+
+SELECT ROUND(MEM_MILEAGE/12,2) AS "소수3째자리 반올림",
+       TRUNC(MEM_MILEAGE/12) AS 절삭
+  FROM MEMBER;
+
+38. 상품테이블의 상품명, 원가율( 매입가 / 판매가 )을 비율(%)로(반올림 없는 것과 소수 첫째자리 반올림 비교) 검색(Alias는 상품명, 원가율1, 원가율2)
+
+SELECT PROD_NAME AS 상품명,
+       (PROD_COST/PROD_PRICE)*100 || '%' AS 원가율1,
+       ROUND((PROD_COST/PROD_PRICE)*100,1) || '%' AS 원가율2
+  FROM PROD;
+
+39. 상품테이블에서 상품입고일을 '2008-09-28' 형식으로 나오게 검색
+(Alias 상품명, 상품판매가, 입고일)
+
+SELECT PROD_NAME AS 상품명,
+       PROD_PRICE AS 상품판매가,
+       REPLACE(PROD_INSDATE, '/', '-') AS 입고일
+  FROM PROD;
