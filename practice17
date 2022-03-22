@@ -1,0 +1,39 @@
+
+1. 상품테이블(PROD)의 상품분류(PROD_LGU)별 매입가격(PROD_COST) 평균 값
+(소수점 2자리 반올림)
+
+SELECT PROD_LGU AS 상품분류,
+       ROUND(AVG(PROD_COST),1) AS 매입가격평균
+  FROM PROD
+ GROUP BY PROD_LGU
+ ORDER BY 1;
+
+2. 상품테이블(PROD)의 총 판매가격(PROD_SALE) 평균 값
+(Alias는 상품총판매가격평균)
+
+SELECT ROUND(AVG(PROD_SALE),1) AS 상품총판매가격평균
+  FROM PROD
+  
+3. 상품테이블(PROD)의 상품분류별(PROD_LGU) 판매가격(PROD_SALE) 평균 값
+(Alias는 상품분류, 상품분류별판매가격평균)
+
+SELECT PROD_LGU AS 상품분류,
+       ROUND(AVG(PROD_SALE),1) AS 상품총판매가격평균
+  FROM PROD
+ GROUP BY PROD_LGU
+ ORDER BY 1;
+
+4. 회원테이블(MEMBER)의 취미종류(MEM_LIKE)수를 COUNT집계
+( Alias는 취미종류수 )
+
+SELECT COUNT(MEM_LIKE) AS 취미종류수
+  FROM MEMBER;
+
+5. 회원테이블(MEMBER)의 취미(MEM_LIKE)별 COUNT집계
+( Alias는 취미, 자료수, 자료수(*) )
+
+SELECT MEM_LIKE AS 취미,
+       COUNT(MEM_LIKE) AS 자료수,
+       COUNT(*) AS "자료수(*)"
+  FROM MEMBER
+ GROUP BY MEM_LIKE;
