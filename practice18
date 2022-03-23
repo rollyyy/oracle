@@ -1,0 +1,44 @@
+6. 회원테이블(MEMBER)의 직업종류(MEM_JOB)수를 COUNT집계
+( Alias는 직업종류수 )
+
+SELECT COUNT(MEM_JOB) AS 직업종류수
+  FROM MEMBER;
+
+7. 장바구니테이블(CART)의 회원별 최대구매수량(CART_QTY)을 검색
+( Alias는 회원ID(CART_MEMBER), 최대수량, 최소수량 )
+
+SELECT CART_MEMBER AS 회원ID, 
+       MAX(CART_QTY) AS 최대수량,
+       MIN(CART_QTY) AS 최소수량
+  FROM CART
+ GROUP BY CART_MEMBER;
+
+8. 오늘이 2005년도7월11일이라 가정하고 장바구니테이블(CART)에 발생될 추가주문번호(CART_NO)를 검색 ----
+( Alias는 최고치주문번호, 추가주문번호 )
+
+SELECT MAX(CART_NO) AS 최고치주문번호,
+       TO_NUMBER(MAX(CART_NO)) + 1 AS 추가주문번호
+  FROM CART
+ WHERE TO_DATE(SUBSTR(CART_NO,1,8)) = TO_DATE('20050711');
+
+9. 상품테이블(PROD)의 상품분류(PROD_LGU)별 판매가(PROD_SALE) 합계 값
+
+SELECT PROD_LGU AS 상품분류,
+       SUM(PROD_SALE) AS 판매합계
+  FROM PROD
+ GROUP BY PROD_LGU;
+
+10. 상품입고테이블(BUYPROD)의 상품(BUY_PROD)별 입고수량(BUY_QTY)의 합계 값
+
+SELECT BUY_PROD AS 상품,
+       SUM(BUY_QTY) AS "입고수량 합계"
+  FROM BUYPROD
+ GROUP BY BUY_PROD;
+
+11. 장바구니테이블(CART)의 상품분류(CART_PROD 왼쪽 네자리)별 판매수량(CART_QTY)의 합계 값
+( Alias는 상품, 판매수량합계 )
+
+SELECT SUBSTR(CART_PROD,1,4) AS 상품분류,
+       SUM(CART_QTY) AS "판매수량 합계"
+  FROM CART
+ GROUP BY SUBSTR(CART_PROD,1,4);
