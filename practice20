@@ -1,0 +1,46 @@
+13. 상품테이블(PROD)에서 거래처(PROD_BUYER), 상품분류(PROD_LGU)별로 최고판매가(PROD_SALE),
+최소판매가, 자료 수를 검색
+
+SELECT PROD_BUYER AS 거래처,
+       PROD_LGU AS 상품분류,
+       MAX(PROD_SALE) AS 최고판매가,
+       MIN(PROD_SALE) AS 최소판매가,
+       COUNT(*) AS 자료수
+  FROM PROD
+ GROUP BY PROD_BUYER, PROD_LGU;
+
+14. 장바구니테이블(CART)에서 회원(CART_MEMBER), 상품분류(CART_PROD 왼쪽 네자리)별로 구매수량(CART_QTY)평균,
+구매수량합계, 자료수를 검색
+( Alias는 회원ID, 상품분류, 구매수량평균, 구매수량합계, 자료수 )
+(회원ID(CART_MEMBER), 상품분류 순으로 SORT하시오)
+
+SELECT CART_MEMBER AS 회원ID,
+       SUBSTR(CART_PROD,1,4) AS 상품분류,
+       ROUND(AVG(CART_QTY),1) AS 구매수량평균,
+       SUM(CART_QTY) AS 구매수량합계,
+       COUNT (*) AS 자료수
+  FROM CART
+ GROUP BY CART_MEMBER, SUBSTR(CART_PROD,1,4)
+ ORDER BY 2;
+
+15. 회원테이블(MEMBER)에서 지역(주소1(MEM_ADD1)의 2자리),생일년도(MEM_BIR)별로 마일리지(MEM_MILEAGE)평균, 마일리지합계,
+최고마일리지, 최소마일리지, 자료수를 검색
+( Alias는 지역, 생일연도, 마일리지평균, 마일리지합계, 최고마일리지,최소마일리지, 자료수 )
+
+SELECT SUBSTR(MEM_ADD1,1,2) AS 지역,
+       MEM_BIR AS 생일년도,
+       ROUND(AVG(MEM_MILEAGE),1) AS 마일리지평균,
+       SUM(MEM_MILEAGE) AS 마일리지합계,
+       MAX(MEM_MILEAGE) AS 최고마일리지,
+       MIN(MEM_MILEAGE) AS 최소마일리지,
+       COUNT(*) AS 자료수
+  FROM MEMBER
+ GROUP BY SUBSTR(MEM_ADD1,1,2), MEM_BIR;
+
+16. 거래처(BUYER_NAME) 담당자(BUYER_CHARGER)가 NULL인 자료 검색 
+(alias는 거래처, 담당자)
+
+SELECT BUYER_NAME AS 거래처,
+       BUYER_CHARGER AS 담당자
+  FROM BUYER
+ WHERE BUYER_CHARGER IS NULL;
