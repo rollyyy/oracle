@@ -1,0 +1,30 @@
+16. 거래처(BUYER_NAME) 담당자(BUYER_CHARGER)가 NULL이 아닌 자료 검색
+(alias는 거래처, 담당자)
+
+SELECT BUYER_NAME AS 거래처,
+       BUYER_CHARGER AS 담당자
+  FROM BUYER
+ WHERE BUYER_CHARGER IS NOT NULL;
+
+17. 거래처(BUYER_NAME) 담당자(BUYER_CHARGER)가 없는 경우 ‘없다’로 치환하여 자료 검색(alias는 거래처, 담당자)
+
+SELECT BUYER_NAME AS 거래처,
+       NVL(BUYER_CHARGER, '없다') AS 담당자
+  FROM BUYER;
+
+18. 상품 분류(PROD_LGU) 중 앞의 두 글자가 'P1' 이면 판매가(PROD_SALE)를 10%인상하고 'P2' 이면 판매가를 15%인상하고
+, 나머지는 동일 판매가로 검색   
+(DECODE 함수 사용, Alias는 상품명(PROD_NAME), 판매가, 변경판매가 )
+
+SELECT PROD_NAME AS 상품명,
+       PROD_SALE AS 판매가,
+       DECODE(SUBSTR(PROD_LGU,1,2), 'P1', PROD_SALE*1.1, 'P2', PROD_SALE*1.15) AS 변경판매가
+  FROM PROD
+
+19. 회원정보테이블(MEMBER)의 주민등록 뒷자리(MEM_REGNO2)(7자리 중 첫째자리)에서 성별 구분을 검색
+( CASE 구문 사용, Alias는 회원명,주민등록번호(주민1-주민2), 성별 )
+
+SELECT MEM_NAME AS 회원명,
+       MEM_REGNO1 ||'-'|| MEM_REGNO2 AS 주민등록번호,
+       CASE WHEN SUBSTR(MEM_REGNO2,1,1)= '1'  THEN '남자' ELSE '여자' END AS 성별
+  FROM MEMBER;
