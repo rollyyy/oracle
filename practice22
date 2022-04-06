@@ -1,0 +1,43 @@
+1. 상품테이블에서 상품코드, 상품명, 분류명을 조회.
+a. 기본형식
+SELECT A.PROD_ID 상품코드, A.PROD_NAME 상품명, B.LPROD_NM 분류명
+  FROM PROD A, LPROD B
+ WHERE A.PROD_LGU = B.LPROD_GU
+
+b. ANSI형식
+SELECT A.PROD_ID 상품코드, A.PROD_NAME 상품명, B.LPROD_NM 분류명
+  FROM PROD A
+ INNER JOIN LPROD B ON A.PROD_LGU = B.LPROD_GU
+
+2. 상품테이블에서 상품코드, 상품명, 분류명, 거래처 명을 조회
+
+a. 테이블명 사용
+SELECT A.PROD_ID, A.PROD_NAME, B.LPROD_NM, C.BUYER_NAME
+  FROM PROD A, LPROD B, BUYER C
+ WHERE A.PROD_LGU = B.LPROD_GU
+   AND A.PROD_LGU = C.BUYER_LGU
+
+b. Alias 사용
+SELECT A.PROD_ID 상품코드, A.PROD_NAME 상품명, B.LPROD_NM 분류명, C.BUYER_NAME 거래처명
+  FROM PROD A, LPROD B, BUYER C
+ WHERE A.PROD_LGU = B.LPROD_GU
+   AND A.PROD_LGU = C.BUYER_LGU
+
+c. ANSI형식
+SELECT A.PROD_ID 상품코드, A.PROD_NAME 상품명, B.LPROD_NM 분류명, C.BUYER_NAME 거래처명
+  FROM PROD A
+ INNER JOIN LPROD B ON A.PROD_LGU = B.LPROD_GU
+ INNER JOIN BUYER C ON A.PROD_LGU = C.BUYER_LGU
+ 
+
+3. 상품테이블에서 거래처가 '삼성전자' 인 자료의 상품코드, 상품명, 거래처 명을 조회
+SELECT A.PROD_ID 상품코드, A.PROD_NAME 상품명, C.BUYER_NAME 거래처명
+  FROM PROD A, BUYER C
+ WHERE A.PROD_LGU = C.BUYER_LGU
+   AND C.BUYER_NAME = '삼성전자'
+
+4. 상품테이블에서 거래처가 '삼성전자' 인 자료의 상품코드, 상품명, 거래처 명을 조회
+SELECT A.PROD_ID 상품코드, A.PROD_NAME 상품명, C.BUYER_NAME 거래처명
+  FROM PROD A, BUYER C
+ WHERE A.PROD_LGU = C.BUYER_LGU
+   AND C.BUYER_NAME = '삼성전자'
