@@ -108,7 +108,6 @@ SELECT
        UT.*
   FROM USER_TEST UT;
   
-  
   -- 실습
 -- EMPLOYEE 테이블의 DEPT_CODE에 외래키 제약조건 추가
 -- 참조 테이블은 DEPARTMENT, 참조컬럼은 DEPARTMENT의 기본키
