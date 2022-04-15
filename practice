@@ -24,7 +24,7 @@ from emp
 where deptno IN (select deptno
                  from emp
                 where ename like '%T%'
-                 group by deptno)
+                 group by deptno);
 
 
 
