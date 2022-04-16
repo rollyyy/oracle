@@ -1,0 +1,33 @@
+1.emp 테이블에서 10번, 20번 부서원을 각각 출력, 집합 연산자를 사용하여 하나의 집합으로 합하여 출력해라
+
+select deptno, ename
+  from EMP
+ where deptno = 10
+ union
+select deptno, ename
+  from EMP
+ where deptno = 20;
+ 
+ 2.emp테이블에서 10번, 20번 부서원의 job을 각각 출력, 집합 연산자를 사용하여 하나의 집합으로 합하여 출력해라
+ 
+ select job
+  from EMP
+ where deptno = 10
+ union
+select job
+  from EMP
+ where deptno = 20; (중복 된 값은 지워짐)
+
+ select job
+  from EMP
+ where deptno = 10
+ union all
+select job
+  from EMP
+ where deptno = 20; (중복된 값 까지 출력)
+ 
+ 3. Student와 Department 테이블을 사용하여 학생번호, 이름, 학년, 학과 이름 출력해라
+ 
+ select studno, name, grade, dname
+  from student s inner join department d
+    on s.deptno1 = d.deptno;
