@@ -31,3 +31,27 @@ select job
  select studno, name, grade, dname
   from student s inner join department d
     on s.deptno1 = d.deptno;
+    
+4. student, exam_01, Hakjum 테이블을 사용하여 각 학생의 이름, 학년, 시험점수, 학점 출력해라
+
+select *
+from student;
+select name, s.grade, total, h.grade
+  from exam_01 e join student s
+    on e.studno = s.STUDNO
+  join Hakjum h
+    on e.total between min_point and max_point;
+
+5.  student, exam_01, Hakjum 테이블을 사용하여 각 학점별 학생 수, 평균 점수, 최대점수, 최소점수 출력해라
+
+select substr(h.grade, 1, 1) 학점,
+       count(s.studno) 학생수,
+       avg(total) 평균점수,
+       max(total) 최대점수,
+       min(total) 최소점수
+  from exam_01 e join student S
+    on e.studno = s.STUDNO
+  join hakjum h on e.total between min_point and max_point
+ group by substr(h.grade, 1, 1)
+ order by 학점 asc;
+
