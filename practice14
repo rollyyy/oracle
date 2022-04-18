@@ -1,6 +1,6 @@
  
 24. 상품 분류테이블(LPROD)에서 현재 상품테이블 (PROD) 에 존재하지 않는 분류만 검색  
-( Alias는 분류코드, 분류명 )
+(Alias는 분류코드, 분류명)
 
 SELECT DISTINCT(A.LPROD_GU) AS 분류코드,
        A.LPROD_NM AS 분류명
@@ -12,7 +12,7 @@ SELECT DISTINCT(A.LPROD_GU) AS 분류코드,
 
 SELECT PROD_NAME AS 상품명
   FROM PROD
- WHERE PROD_PRICE BETWEEN 100000 AND 300000 ;
+ WHERE PROD_PRICE BETWEEN 100000 AND 300000;
 
 26. 회원 중 생일이 1975-01-01에서 1976-12-31사이에 태어난 회원을 검색 
 ( Alias는 회원ID, 회원 명, 생일 )
