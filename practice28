@@ -1,0 +1,22 @@
+1. emp2 테이블과 p_grade 테이블을 조회하여 사원의 이름과 직급, 현재 연봉, 해당 직급의 연봉의 하한금액과 상한 금액을 출력하세요.
+
+select name, e.position, pay, s_pay, e_pay
+  from emp2 e join P_GRADE p
+    on e.position = p.position;
+select *
+  from p_grade;
+  
+ 2. 1전공(deptno1)이 101번인 학생들의 학생 이름과 지도교수 이름을 출력하세요.
+ 
+ select deptno1, s.name, p.name
+from student s join professor p
+ on s.profno = p.profno
+where deptno1 = 101;
+
+3. emp2 테이블과 p_grade 테이블을 조회하여 사원들의 이름과 나이, 현재직급, 예상직급을 출력하세요. 예상직급은 나이로 계산하며 소수점이하는 생략하세요.
+
+select e.name, round(months_between(sysdate, e.BIRTHDAY)/12) as 나이,
+    nvl(e.position,'사원') as 현재직급,
+    p.POSITION       
+from emp2 e left join p_grade p
+ on months_between(sysdate, e.birthday)/12 between S_AGE and E_AGE;
