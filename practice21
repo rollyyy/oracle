@@ -22,7 +22,7 @@ SELECT PROD_NAME AS 상품명,
   FROM PROD
 
 19. 회원정보테이블(MEMBER)의 주민등록 뒷자리(MEM_REGNO2)(7자리 중 첫째자리)에서 성별 구분을 검색
-( CASE 구문 사용, Alias는 회원명,주민등록번호(주민1-주민2), 성별 )
+( CASE 구문 사용, Alias는 회원명,주민등록번호 (주민1, 주민2), 성별 )
 
 SELECT MEM_NAME AS 회원명,
        MEM_REGNO1 ||'-'|| MEM_REGNO2 AS 주민등록번호,
