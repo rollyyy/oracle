@@ -34,3 +34,20 @@ SELECT E.ENAME, D.DNAME, E.SAL, E.JOB
    AND JOB = (SELECT JOB
                 FROM EMP
       WHERE ENAME = 'ALLEN')
+      
+6)'JONES'가 속해있는 부서의 모든사람의 사원번호, 이름, 입사일, 급여를 출력하라.
+
+SELECT EMPNO, ENAME, HIREDATE, SAL
+  FROM EMP
+ WHERE DEPTNO = (SELECT DEPTNO
+                   FROM EMP
+      WHERE ENAME = 'JONES')
+
+ 
+7)전체 사원의 평균임금보다 많은 사원의 사원번호, 이름, 부서명, 입사일, 지역, 급여를출력하라.
+
+SELECT E.EMPNO, E.ENAME, D.DNAME, E.HIREDATE, D.LOC, E.SAL
+  FROM EMP E, DEPT D
+ WHERE E.DEPTNO = D.DEPTNO
+   AND SAL > (SELECT AVG(SAL)
+                FROM EMP)
