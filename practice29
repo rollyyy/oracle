@@ -75,3 +75,22 @@ SELECT E.EMPNO, E.ENAME, D.DNAME, E.HIREDATE, D.LOC
    AND E.JOB NOT IN (SELECT JOB
                        FROM EMP
        WHERE DEPTNO = 30)
+       
+10)10번 부서와 같은 일을 하는 사원의 사원번호, 이름, 부서명, 지역, 급여를 급여가 많은 순으로 출력하라.
+
+SELECT E.EMPNO, E.ENAME, D.DNAME, D.LOC, E.SAL
+  FROM EMP E, DEPT D
+ WHERE E.DEPTNO = D.DEPTNO
+   AND E.DEPTNO != 10
+   AND E.JOB IN (SELECT JOB
+                 FROM EMP
+    WHERE DEPTNO = 10)
+ ORDER BY E.SAL DESC
+
+11)'MARTIN'이나 'SCOTT'의 급여와 같은 사원의 사원번호, 이름, 급여를 출력하라.
+
+SELECT EMPNO, ENAME, SAL
+  FROM EMP
+ WHERE SAL IN (SELECT SAL
+                 FROM EMP
+    WHERE ENAME IN ('MARTIN', 'SCOTT'))
