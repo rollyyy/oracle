@@ -94,3 +94,20 @@ SELECT EMPNO, ENAME, SAL
  WHERE SAL IN (SELECT SAL
                  FROM EMP
     WHERE ENAME IN ('MARTIN', 'SCOTT'))
+    
+ 12)급여가 30번 부서의 최고 급여보다 높은 사원의 사원번호, 이름, 급여를 출력하라.
+
+SELECT EMPNO, ENAME, SAL
+  FROM EMP
+ WHERE SAL > (SELECT MAX(SAL)
+                FROM EMP
+      WHERE DEPTNO = 30)
+ 
+
+13)급여가 30번 부서의 최저 급여보다 높은 사원의 사원번호, 이름, 급여를 출력하라.
+
+SELECT EMPNO, ENAME, SAL
+  FROM EMP
+ WHERE SAL > (SELECT MIN(SAL)
+                FROM EMP
+      WHERE DEPTNO = 30)
