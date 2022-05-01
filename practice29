@@ -119,3 +119,8 @@ select ename, sal, case when deptno = 10 then sal*0.13 else 0 end as bonus
 from emp
 where deptno = 10
 order by bonus desc
+
+2) 1990년 1월 1일 현재, 100일 10시간 이상 근무한 사람을 검색하시오.
+
+SELECT employee_id, last_name FROM employees
+WHERE hire_date + TO_DSINTERVAL('100 10:00:00') <= DATE '1990-01-01'
