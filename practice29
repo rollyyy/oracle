@@ -124,3 +124,8 @@ order by bonus desc
 
 SELECT employee_id, last_name FROM employees
 WHERE hire_date + TO_DSINTERVAL('100 10:00:00') <= DATE '1990-01-01'
+
+3) 1990년 1월 1일 현재, 100일 10시간 이상 근무한 사람을 검색하시오.
+
+SELECT employee_id, last_name FROM employees
+WHERE hire_date + TO_DSINTERVAL('100 10:00:00') <= DATE '1990-01-01'
