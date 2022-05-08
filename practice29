@@ -176,3 +176,10 @@ ORDER BY COUNT(e.empno) ASC ;
 SELECT e.ename employee, e.empno "emp#" , m.ename manager, m.empno "mgr#"
 FROM emp e, emp m
 WHERE e.mgr = m.empno;
+
+10) 관리자보다 먼저 입사한 모든 사원의 이름 및 입사일을 관리자의 이름 및 입사일과 함께 표시하고 열 레이블을 각각 employee, emp hired, manager, mgr hired로 지정
+
+SELECT e.ename employee, e.hiredate "emp hired" , m.ename manager, m.hiredate "mgr hired"
+FROM emp e, emp m
+WHERE e.mgr = m.empno
+AND e.hiredate < m.hiredate;
