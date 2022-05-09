@@ -183,3 +183,10 @@ SELECT e.ename employee, e.hiredate "emp hired" , m.ename manager, m.hiredate "m
 FROM emp e, emp m
 WHERE e.mgr = m.empno
 AND e.hiredate < m.hiredate;
+
+11) 사원의 이름 및 사원번호를 관리자의 이름과 관리자 번호와 함께 표시하고 각각의 열  레이블은 employee, emp#, manager, mgr#로 지정하는데 King을 포함하여 관리자가 없는 모든 사원을 표시하도록 하고 결과를 사원번호를 기준으로 정렬
+
+SELECT e.ename employee, e.empno "emp#" , m.ename manager, m.empno "mgr#"
+FROM emp e, emp m
+WHERE e.mgr = m.empno(+)
+ORDER BY e.empno ASC;
