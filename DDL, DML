@@ -77,7 +77,6 @@ UPDATE TB_기숙사
                   AND C.ABSENCE_YN = 'N');  
       
 
-
 /*내가 확인하려고 만든 것*/
 SELECT
       A.학번
