@@ -190,3 +190,24 @@ SELECT e.ename employee, e.empno "emp#" , m.ename manager, m.empno "mgr#"
 FROM emp e, emp m
 WHERE e.mgr = m.empno(+)
 ORDER BY e.empno ASC;
+
+ --직책이 SALESMAN, ANALYST인 사람의 모든 정보를 출력하시오. ( or, like, in, any, some )
+ select *
+from emp
+where job = 'SALESMAN' 
+or job = 'ANALYST';
+
+select *
+from emp
+where job like 'S%' 
+or job like 'A%';
+
+--1981년 5월 1일 ~ 1982년 2월 사이에 입사한 사원들의 모든 정보를 부서번호순(오름차순)으로 검색하시오. ( TO_DATE )
+
+select *
+from emp
+where hiredate >= TO_DATE('19810501', 'yyyymmdd') 
+and hiredate < TO_DATE('19820228', 'yyyymmdd')
+order by deptno;
+
+
