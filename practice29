@@ -210,4 +210,17 @@ where hiredate >= TO_DATE('19810501', 'yyyymmdd')
 and hiredate < TO_DATE('19820228', 'yyyymmdd')
 order by deptno;
 
+4. 직급이 SALESMAN 일 경우 급여 * 1.1, CLERK 일 경우 급여 * 1.3, MANAGER 일 경우 급여 * 1.5 를 하고 모든 정보를 출력하시오. ( DECODE )
 
+select empno
+     , job
+     , ename
+     , sal
+     , decode(job, 'SALESMAN', sal*1.1, 'CLERK', sal*1.3, 'MANAGER', sal*1.5, sal) as 인상된급여 
+from emp;
+
+5. 모든 사원들에게 커미션을 200씩 추가하여 사원이름, 커미션 값을 출력하시오. ( nvl )
+
+select ename
+     , nvl(comm,0) + 200 
+from emp;
