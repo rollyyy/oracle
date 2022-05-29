@@ -224,3 +224,17 @@ from emp;
 select ename
      , nvl(comm,0) + 200 
 from emp;
+
+6.  커미션을 가지고 있는 사원은 Y, 커미션이 NULL값인 사원은 N을 포함하여 사원이름과 커미션 값을 출력하시오.( nvl2 )
+
+select ename
+     , nvl2(comm, 'Y', 'N') 
+from emp;
+cs
+ 
+
+7. 1981년 입사자들의 평균 임금을 출력하시오.
+
+select AVG(sal)
+from emp
+where TO_CHAR(hiredate,'YYYY') = '1981';
