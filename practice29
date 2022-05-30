@@ -238,3 +238,10 @@ cs
 select AVG(sal)
 from emp
 where TO_CHAR(hiredate,'YYYY') = '1981';
+
+8. 사원번호, 사원이름, 총 급여(SAL+COMM)을 출력하시오. 
+
+select empno
+     , ename
+     , sal+nvl(comm,0)
+from emp;
