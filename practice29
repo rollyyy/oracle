@@ -260,3 +260,16 @@ select job
 from emp
 where job='SALESMAN'
 group by job;
+
+1. 사원수가 3명 이상인 부서명과 인원수를 출력하시오. ( group by, having )
+select job
+     , count(*)
+from emp
+group by job
+having count(*) >= 3;
+
+2. 직무 중 가장 적게 수입을 가지는 직무의 평균 월급을 출력하시오.
+
+select min(AVG(sal)) 
+from emp 
+group by job;
