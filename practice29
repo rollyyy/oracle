@@ -315,3 +315,13 @@ from emp
    , dept
 where emp.deptno = dept.deptno
 and emp.ename = 'ADAMS';
+
+7. NEW YORK 이나 DALLAS 지역에 근무하는 사원들의 사원번호, 사원이름을 사원번호 순으로 검색하시오.
+
+select e.empno
+     , e.ename
+from emp e
+   , dept d
+where e.deptno = d.deptno
+and (d.loc = 'NEWYORK' or d.loc='DALLAS')
+order by e.empno;
