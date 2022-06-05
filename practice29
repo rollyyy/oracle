@@ -325,3 +325,18 @@ from emp e
 where e.deptno = d.deptno
 and (d.loc = 'NEWYORK' or d.loc='DALLAS')
 order by e.empno;
+
+8.  부서번호 10번인 사원들의 사원번호, 사원이름, 월급을 출력하시오.
+
+select empno, ename, sal
+from emp
+where deptno=10;
+cs
+ 
+
+9.  사원번호 7369인 사원 이름, 입사일, 부서번호를 출력하시오.
+
+select ename as 사원이름, hiredate as 입사일, deptno as 부서번호
+from emp
+where empno=7369;
+
