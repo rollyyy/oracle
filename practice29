@@ -340,3 +340,8 @@ select ename as 사원이름, hiredate as 입사일, deptno as 부서번호
 from emp
 where empno=7369;
 
+10. 사원번호 7300크고 7400 작은 사원 이름, 입사일, 부서번호를 출력하시오.
+
+select ename as 사원이름, hiredate as 입사일, deptno as 부서번호
+from emp
+where empno > 7300 AND empno < 7400;
