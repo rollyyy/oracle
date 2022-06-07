@@ -345,3 +345,10 @@ where empno=7369;
 select ename as 사원이름, hiredate as 입사일, deptno as 부서번호
 from emp
 where empno > 7300 AND empno < 7400;
+
+11.  EMP 모든 정보를 (사원번호 기준 내림차순으로) 검색하시오.
+정렬
+
+select *
+from emp
+order by empno desc;
