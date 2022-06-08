@@ -352,3 +352,9 @@ where empno > 7300 AND empno < 7400;
 select *
 from emp
 order by empno desc;
+
+5. 이름이 S로 시작하는 모든 사람의 사원번호와 이름을 출력하시오.
+
+select *
+from emp
+order by empno desc;
