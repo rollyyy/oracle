@@ -353,8 +353,14 @@ select *
 from emp
 order by empno desc;
 
-5. 이름이 S로 시작하는 모든 사람의 사원번호와 이름을 출력하시오.
+12. 이름이 S로 시작하는 모든 사람의 사원번호와 이름을 출력하시오.
 
 select *
 from emp
 order by empno desc;
+
+13. 직속상관 사원번호가 없는 사원의 모든 정보를 검색하시오.
+
+select *
+from emp
+where mgr is null;
