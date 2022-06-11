@@ -379,3 +379,23 @@ having count(*) >= 3;
 select min(AVG(sal)) 
 from emp 
 group by job;
+
+3. 사원번호, 사원이름, 부서이름, 부서번호를 출력하시오. ( Join )
+-- 내부조인
+
+select emp.ename
+     , emp.empno
+     , dept.dname
+     , dept.deptno
+from emp
+   , dept
+where emp.deptno = dept.deptno;
+cs
+
+--Natural 조인
+
+select ename
+     , empno
+     , dname
+     , deptno
+from emp natural join dept;
