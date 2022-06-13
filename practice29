@@ -415,15 +415,6 @@ cs
 
 18. 사원수가 5명이 넘는 부서의 부서명과 사원수를 출력하시오.
  
-
-1
-2
-3
-4
-5
-6
-7
-8
 select dept.dname
      , count(*)
 from emp
@@ -432,3 +423,13 @@ where emp.deptno = dept.deptno
 group by emp.deptno
        , dept.dname
 having count(*) >= 5;
+
+19. ADAMS 사원이 근무하는 부서이름과 지역이름을 출력하시오.
+
+select dept.dname
+     , dept.loc
+     , emp.ename
+from emp
+   , dept
+where emp.deptno = dept.deptno
+and emp.ename = 'ADAMS';
