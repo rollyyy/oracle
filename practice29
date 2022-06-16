@@ -409,6 +409,15 @@ select ename
 from emp join dept
 on emp.deptno = dept.deptno;
 
+--Join Using
+
+select ename
+     , empno
+     , dname
+     , deptno
+from emp join dept
+using (deptno);
+
 17. 부서가 30이고, 급여가 1500이상인 사원의 이름, 급여, 부서명, 부서번호를 출력하시오. ( Join on )
 
 select emp.ename
