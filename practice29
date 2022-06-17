@@ -461,3 +461,9 @@ from emp e
 where e.deptno = d.deptno
 and (d.loc = 'NEWYORK' or d.loc='DALLAS')
 order by e.empno;
+
+21. 이름이 A로 시작하는 사원의 사원번호, 이름, 입사일자, 부서번호 출력
+
+SELECT EMPNO, ENAME, HIREDATE, DEPTNO
+FROM EMP
+WHERE ENAME like 'A%';
