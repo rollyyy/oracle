@@ -467,3 +467,17 @@ order by e.empno;
 SELECT EMPNO, ENAME, HIREDATE, DEPTNO
 FROM EMP
 WHERE ENAME like 'A%';
+
+22. 입사년도가 1981년 이외 입사자의 모든 정보
+
+SELECT *
+FROM EMP
+WHERE HIREDATE NOT LIKE '1981'; 
+
+
+23. 입사년월이 1981/02 에 입사한 사람의 모든 정보
+
+SELECT *
+FROM EMP
+WHERE HIREDATE >= '1981/02/01'
+AND HIREDATE <= '1981/02/28';
