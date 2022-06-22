@@ -525,3 +525,20 @@ SELECT *
 FROM EMP
 WHERE COMM IS NOT NULL AND COMM > '0'
 ORDER BY COMM ASC;
+
+29. 20번 부서나 30번 부서에 속하고 이름에 ‘AR’이 포함된 사원들의 이름과 부서번호, 업무(job)를 구하시오. (where절, OR 또는 IN, LIKE 연산자 이용)
+
+SELECT ENAME, DEPTNO, JOB
+FROM EMP
+WHERE (ename LIKE '%AR%' )
+AND (DEPTNO IN (20, 30));
+ 
+ 
+
+30. RESEARCH 부서에서 일하는 사원들 중 급여가 2,000이하인 사원들의 수를 구하기 위해, (a) join 을 이용하는 질의와, (b) subquery를 이용하는 질의를 각각 작성하시오.
+
+SELECT COUNT(DISTINCT empno)
+FROM emp e JOIN dept d
+    ON e.deptno = d.deptno
+WHERE dname = 'RESEARCH'
+AND sal <= 2000;
