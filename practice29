@@ -542,3 +542,10 @@ FROM emp e JOIN dept d
     ON e.deptno = d.deptno
 WHERE dname = 'RESEARCH'
 AND sal <= 2000;
+
+31. 사원들 중 급여등급이 5에 속하면서 수당(comm)이 500미만인 사원들의 이름과 급여, 수당을 구하고 “연봉”을 계산하시오. 단, 수당을 모를 경우 0으로 간주함 (non-equi-join, NVL 이용)
+
+SELECT ENAME, SAL, NVL(COMM, 0), sal*12 + NVL(COMM, 0) "연봉"
+FROM emp e, salgrade s
+WHERE s.grade = 5
+AND (e.sal >= s.losal AND e.sal <= s.hisal) AND (e.comm < 500 OR e.comm IS NULL);
