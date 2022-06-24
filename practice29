@@ -549,3 +549,11 @@ SELECT ENAME, SAL, NVL(COMM, 0), sal*12 + NVL(COMM, 0) "연봉"
 FROM emp e, salgrade s
 WHERE s.grade = 5
 AND (e.sal >= s.losal AND e.sal <= s.hisal) AND (e.comm < 500 OR e.comm IS NULL);
+
+32. 모든 사원들의 이름, 입사일, 재직년수(만으로 계산), “퇴사예정일”(재직한지 30년 되는 날)을 구 하시오. 입사일은 “OOOO년 OO월 OO일” 형식으로 출력하고, 입사일이 빠른 사원부터 순서대 로 출력할 것
+
+SELECT ENAME, TO_CHAR(HIREDATE, 'YYYY "년" MM "월" DD "일"')"입사일", 
+       ROUND(ROUND(MONTHS_BETWEEN(SYSDATE, HIREDATE), 2)/12, 0) "재직년수", 
+       ADD_MONTHS(HIREDATE, 360) "퇴사예정일"
+FROM emp, DUAL
+ORDER BY HIREDATE ASC;
