@@ -557,3 +557,9 @@ SELECT ENAME, TO_CHAR(HIREDATE, 'YYYY "년" MM "월" DD "일"')"입사일",
        ADD_MONTHS(HIREDATE, 360) "퇴사예정일"
 FROM emp, DUAL
 ORDER BY HIREDATE ASC;
+
+33. 각 부서에서 같은 업무를 수행하는 사원들을 분류하여 부서번호, 업무명, 인원수, 평균 급여를 출력하시오. (group by절, 집계 함수 이용)
+
+SELECT deptno, JOB, COUNT(empno), AVG(sal)
+FROM EMP
+GROUP BY deptno, job;
