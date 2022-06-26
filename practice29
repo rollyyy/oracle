@@ -563,3 +563,11 @@ ORDER BY HIREDATE ASC;
 SELECT deptno, JOB, COUNT(empno), AVG(sal)
 FROM EMP
 GROUP BY deptno, job;
+
+34. 사원이 2명 이상 있는 부서들에 대해 부서명과 평균 급여를 각각 구하시오. (having절 이용) (선택) 위 질의를 having절을 사용하지 않고 derived relation(subquery)을 사용하여 작성하시오.
+
+SELECT d.dname, AVG(sal)
+FROM emp e, dept d
+WHERE e.deptno = d.deptno
+GROUP BY d.dname
+HAVING COUNT(empno) >= 2
