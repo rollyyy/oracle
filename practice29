@@ -571,3 +571,10 @@ FROM emp e, dept d
 WHERE e.deptno = d.deptno
 GROUP BY d.dname
 HAVING COUNT(empno) >= 2
+
+35. 모든 부서에 대해 부서명과 사원수, 최대급여를 각각 구하시오. 단, 사원이 한 명도 없는 부서 도 결과에 포함되어야 함 (outer-join 이용)
+
+SELECT d.DNAME, COUNT(e.ename), max(e.sal)
+FROM emp e RIGHT OUTER JOIN dept d
+    ON e.deptno = d.deptno
+GROUP BY d.DNAME
