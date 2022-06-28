@@ -578,3 +578,14 @@ SELECT d.DNAME, COUNT(e.ename), max(e.sal)
 FROM emp e RIGHT OUTER JOIN dept d
     ON e.deptno = d.deptno
 GROUP BY d.DNAME
+
+36. 각 사원에 대해 같은 부서에 근무하는 동료 사원들의 이름을 구하시오. (self-join 이용)
+
+SELECT e.ename,  f.ename "동료"
+FROM emp e JOIN emp f
+ON e.deptno = f.deptno
+where f.deptno not in
+    (select deptno
+     from emp
+     where e.empno = f.empno)
+ORDER BY e.ename ASC;
