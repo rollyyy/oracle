@@ -589,3 +589,12 @@ where f.deptno not in
      from emp
      where e.empno = f.empno)
 ORDER BY e.ename ASC;
+
+9. 각 사원의 이름, 급여, “공제액”을 출력하되 급여가 가장 많은 사원부터 순서대로 출력하시오.
+단, 공제액은 급여가 1000미만인 경우 급여의 1%, 급여가 1000이상 2000미만인 경우 1.5%, 급 여가 2000이상인 경우는 2%에 해당하는 금액으로 계산함 (CASE WHEN, 정렬 이용)
+
+SELECT ENAME, SAL, (CASE WHEN sal >= 2000 THEN SAL * 0.02
+                    WHEN (1000 <= sal AND sal < 2000) THEN SAL * 0.015
+                    WHEN sal < 1000 THEN SAL * 0.01 END)"공제액"
+FROM EMP
+ORDER BY SAL DESC;
