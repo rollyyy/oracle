@@ -590,7 +590,7 @@ where f.deptno not in
      where e.empno = f.empno)
 ORDER BY e.ename ASC;
 
-9. 각 사원의 이름, 급여, “공제액”을 출력하되 급여가 가장 많은 사원부터 순서대로 출력하시오.
+37. 각 사원의 이름, 급여, “공제액”을 출력하되 급여가 가장 많은 사원부터 순서대로 출력하시오.
 단, 공제액은 급여가 1000미만인 경우 급여의 1%, 급여가 1000이상 2000미만인 경우 1.5%, 급 여가 2000이상인 경우는 2%에 해당하는 금액으로 계산함 (CASE WHEN, 정렬 이용)
 
 SELECT ENAME, SAL, (CASE WHEN sal >= 2000 THEN SAL * 0.02
@@ -598,3 +598,16 @@ SELECT ENAME, SAL, (CASE WHEN sal >= 2000 THEN SAL * 0.02
                     WHEN sal < 1000 THEN SAL * 0.01 END)"공제액"
 FROM EMP
 ORDER BY SAL DESC;
+
+38. SALES 부서에 속한 사원들에 대해 사원번호, 이름, 소속부서명, 급여, 수당, 입사일, 관리자 사 원번호를 검색하여 새로운 테이블 “EMPXXXXXX”로 저장하시오.
+
+CREATE TABLE "EMP180986" 
+   (
+        "EMPNO" NUMBER(4,0), 
+        "ENAME" VARCHAR2(10 BYTE), 
+        "DNAME" VARCHAR2(14 BYTE), 
+        "SAL" NUMBER(7,2), 
+        "COMM" NUMBER(7,2), 
+        "HIREDATE" DATE, 
+        "MGR" NUMBER(4,0)
+   )
