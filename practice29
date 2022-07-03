@@ -623,3 +623,11 @@ INSERT INTO EMP180986
         FROM EMP e JOIN DEPT d
         ON e.DEPTNO = d.deptno 
         WHERE dname = 'RESEARCH';
+
+41. 수당이 미정인 사원들은 모두 급여의 10%를 수당으로 받도록 결정되었다. 1번 테이블의 데이터를 변경하시오.
+
+UPDATE EMP180986
+    SET COMM = SAL * 0.1
+    WHERE COMM IS NULL;
+
+ 
