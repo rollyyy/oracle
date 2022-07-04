@@ -631,3 +631,11 @@ UPDATE EMP180986
     WHERE COMM IS NULL;
 
  
+42. JULIET이 SMITH와 같은 부서, 같은 관리자에 배정되었다. 이를 1번 테이블에 반영하시오.
+
+UPDATE EMP180986
+    SET (DNAME, MGR) = ( SELECT dname, MGR
+                         FROM EMP180986
+                         WHERE ename = 'SMITH' 
+                        )
+    WHERE ename = 'JULIET';
