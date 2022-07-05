@@ -639,3 +639,12 @@ UPDATE EMP180986
                          WHERE ename = 'SMITH' 
                         )
     WHERE ename = 'JULIET';
+
+43. 재직년수가 30년이 되는 날을 퇴사예정일(retiredate)로 가정하고, 1번 테이블에 사원들의 퇴사 예정일을 저장하기 위한 컬럼을 추가한 후 모든 사원들의 퇴사예정일을 계산하여 저장하시오.
+
+ALTER TABLE emp180986
+    ADD (retiredate VARCHAR(10));
+ 
+UPDATE emp180986
+    SET retiredate = ADD_MONTHS(HIREDATE, 360);
+​
