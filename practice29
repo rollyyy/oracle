@@ -647,4 +647,9 @@ ALTER TABLE emp180986
  
 UPDATE emp180986
     SET retiredate = ADD_MONTHS(HIREDATE, 360);
-​
+
+44. 1번 테이블에서 관리자사원번호 컬럼에는 실제로 존재하는 사원번호 값만 저장될 수 있도록 제약을 추가하시오. 그 후 이 제약을 위배하는 잘못된 행을 삽입하여 오류 발생 여부를 확인하시오.
+
+ALTER TABLE emp180986 ADD CONSTRAINT emp180986_empno_pk PRIMARY KEY (empno);
+
+ALTER TABLE emp180986 ADD CONSTRAINT emp180986_mgr_fk FOREIGN KEY(mgr) REFERENCES emp180986(empno);
