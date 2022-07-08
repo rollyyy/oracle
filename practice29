@@ -668,3 +668,13 @@ VALUES (emp180986_seq.nextval,'JIN', 'RESEARCH', 2000, 20, '20/09/23', 8010, '50
 
 INSERT INTO EMP180986 
 VALUES (emp180986_seq.nextval,'SOMSOM', 'RESEARCH', 1000, 10, '20/09/23', 8010, '50/09/23');
+
+ 
+
+46. 1번 테이블의 사원들 중 근무 기간(일)이 가장 긴 사원 3명을 구해 사원번호, 이름, 근무기간을 차례대로 출력하시오.
+
+SELECT ROWNUM, empno, ename, ROUND(SYSDATE - hiredate , 2)
+FROM ( SELECT empno, ename, hiredate
+       FROM emp180986
+       ORDER BY HIREDATE ASC)
+WHERE ROWNUM <= 3;
