@@ -678,3 +678,10 @@ FROM ( SELECT empno, ename, hiredate
        FROM emp180986
        ORDER BY HIREDATE ASC)
 WHERE ROWNUM <= 3;
+
+47. 급여가 2000을 넘는 사원의 이름과 급여를 표현, 급여가 많은 것부터 작은 순으로 출력하시오.
+
+SELECT ENAME 사원명, SAL 급여
+FROM EMP
+WHERE SAL>=2000
+ORDER BY SAL DESC;
