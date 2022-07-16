@@ -703,4 +703,8 @@ SELECT
     FROM ANIMAL_INS
     WHERE NAME IS NOT NULL;
  
- 
+ 50.어린 동물 찾기
+ SELECT animal_id, name
+from animal_ins
+where INTAKE_CONDITION != 'Aged'
+order by 1;
