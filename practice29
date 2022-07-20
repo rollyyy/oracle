@@ -723,3 +723,14 @@ SELECT NAME
 FROM ANIMAL_INS
 ORDER BY DATETIME
 LIMIT 1;
+
+53. 매출테이블에서 각 상품(브랜드)별 신발 판매수량이 각 상품별 평균 판매수량 보다 높은 매출을 출력하시오.
+
+SELECT * 
+FROM dbo.salesTbl AS S1
+WHERE s_qty > (
+SELECT AVG(s_qty) 
+FROM dbo.salesTbl AS S2 
+WHERE S2.s_p_code = S1.s_p_code
+);
+
