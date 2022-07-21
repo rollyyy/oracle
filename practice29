@@ -734,3 +734,8 @@ FROM dbo.salesTbl AS S2
 WHERE S2.s_p_code = S1.s_p_code
 );
 
+54. 매출 테이블에서 날짜별 판매수량이 각 지점별 평균보다 낮은 지점명과 매출날짜, 판매수량을 출력하시오.
+
+SELECT s_branch, s_date, s_qty
+FROM dbo.salesTbl t1
+WHERE s_qty < (SELECT AVG(s_qty) FROM dbo.salesTbl t2 WHERE t1.s_branch = t2.s_branch);
