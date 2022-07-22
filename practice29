@@ -739,3 +739,9 @@ WHERE S2.s_p_code = S1.s_p_code
 SELECT s_branch, s_date, s_qty
 FROM dbo.salesTbl t1
 WHERE s_qty < (SELECT AVG(s_qty) FROM dbo.salesTbl t2 WHERE t1.s_branch = t2.s_branch);
+
+55. 각 영화의 전문가 평점(mark2)이 감독별 관객평점(mark1) 평균보다 높은 영화를 출력하시오.
+
+SELECT *
+FROM dbo.tbl_movie t1
+WHERE mark2 >= (SELECT AVG(mark1) FROM dbo.tbl_movie t2 WHERE t1.director = t2.director);
