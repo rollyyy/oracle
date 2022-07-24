@@ -20,7 +20,6 @@ SELECT e.deptno, e.ename, e.sal
 ORDER BY SAL;
 
 
-
 14. EMP 테이블에서 업무별로 월급이 평균 월급보다 낮은 사원을 부서번호,이름,급여를 출력하는 SELECT문을 작성하시오.
 
 SELECT e.deptno, e.ename, e.sal
