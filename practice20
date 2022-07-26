@@ -1,6 +1,7 @@
 13. 상품테이블(PROD)에서 거래처(PROD_BUYER), 상품분류(PROD_LGU)별로 최고판매가(PROD_SALE),
 최소판매가, 자료 수를 검색
 
+
 SELECT PROD_BUYER AS 거래처,
        PROD_LGU AS 상품분류,
        MAX(PROD_SALE) AS 최고판매가,
